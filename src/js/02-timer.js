@@ -15,6 +15,13 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     console.log(selectedDates[0]);
+    const selectedDate = selectedDates[0];
+    if (selectedDate < new Date()) {
+      window.alert('Please choose a date in the future');
+      startButton.disabled = true;
+    } else {
+      startButton.disabled = false;
+    }
   },
 };
 
@@ -39,7 +46,7 @@ function convertMs(ms) {
 
 console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
 console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
-console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
+console.log(convertMs(24140000)); // {days: 0, hours: 6, minutes: 42, seconds: 20}
 
 function addLeadingZero(value) {
   return value.toString().padStart(2, '0');
@@ -67,25 +74,11 @@ function startCountdown(endDate) {
   }, 1000);
 }
 
-flatpickr(dateTimePicker, {
-  enableTime: true,
-  time_24hr: true,
-  defaultDate: new Date(),
-  minuteIncrement: 1,
-  onClose(selectedDates) {
-    const selectedDate = selectedDates[0];
-    if (selectedDate < new Date()) {
-      window.alert('Please choose a date in the future');
-      startButton.disabled = true;
-    } else {
-      startButton.disabled = false;
-    }
-  },
-});
+flatpickr(dateTimePicker, options);
 
 startButton.addEventListener('click', () => {
   const selectedDate = flatpickr.formatDate(
-    dateTimePicker.value,
+    flatpickr.parseDate(dateTimePicker.value, 'Y-m-d H:i:S'),
     'Y-m-d H:i:S'
   );
   const endDate = new Date(selectedDate).getTime();
