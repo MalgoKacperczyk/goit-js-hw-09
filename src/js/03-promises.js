@@ -5,7 +5,7 @@ document.querySelector('.form').addEventListener('submit', function (event) {
   const stepInput = document.querySelector('input[name="step"]');
   const amountInput = document.querySelector('input[name="amount"]');
 
-  const delay = parseInt(delayInput.value);
+  let delay = parseInt(delayInput.value);
   const step = parseInt(stepInput.value);
   const amount = parseInt(amountInput.value);
 
